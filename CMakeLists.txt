@@ -14,13 +14,23 @@ include_directories(${PROJECT_SOURCE_DIR}/libraries/matplotlib-cpp)
 find_package (PkgConfig REQUIRED)
 find_package(PythonLibs 2.7)
 
-set(plot_src
-src/main.cpp
+set(plot_line_src
+    src/main_line.cpp
 )
-add_executable(plot ${plot_src})
-target_compile_options(plot
+add_executable(plot_line ${plot_line_src})
+target_compile_options(plot_line
     PUBLIC -Wall -o -std=c++11
 )
-target_include_directories(plot PRIVATE ${PYTHON_INCLUDE_DIRS})
-target_link_libraries(plot ${PYTHON_LIBRARIES})
+target_include_directories(plot_line PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(plot_line ${PYTHON_LIBRARIES})
     
+
+set(animate_src
+    src/main_animate.cpp
+)
+add_executable(animate ${animate_src})
+target_compile_options(plot_line
+    PUBLIC -Wall -o -std=c++11
+)
+target_include_directories(animate PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(animate ${PYTHON_LIBRARIES})
