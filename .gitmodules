@@ -1,3 +1,9 @@
 [submodule "libraries/matplotlib-cpp"]
 	path = libraries/matplotlib-cpp
 	url = https://github.com/lava/matplotlib-cpp.git
+[submodule "libraries/gtkmm-plplot"]
+	path = libraries/gtkmm-plplot
+	url = https://github.com/tschoonj/gtkmm-plplot.git
+[submodule "libraries/plplot"]
+	path = libraries/plplot
+	url = https://github.com/PLplot/PLplot.git

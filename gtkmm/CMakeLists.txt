@@ -9,6 +9,8 @@ pkg_check_modules(GTKMM gtkmm-3.0)
 link_directories(${GTKMM_LIBRARY_DIRS})
 include_directories(${GTKMM_INCLUDE_DIRS})
 
+pkg_check_modules(GTKMMPLPLOT gtkmm-plplot-2.0)
+
 link_directories("/usr/local/lib/")
 include_directories("/usr/local/include/")
 
@@ -26,4 +28,22 @@ PUBLIC
 )
 target_link_libraries(hello_world 
     ${GTKMM_LIBRARIES}
+)
+
+# Hello World Plot #############################################################
+set(plot_hello_world_src
+    src/main_plplot.cpp
+)
+add_executable(hello_world_plot ${plot_hello_world_src})
+target_compile_options(hello_world_plot
+    PUBLIC -Wall -o -std=c++11
+)
+target_include_directories(hello_world_plot
+PUBLIC 
+    ${GTKMM_INCLUDE_DIRS}
+    ${GTKMMPLPLOT_INCLUDE_DIRS}
+)
+target_link_libraries(hello_world_plot 
+    ${GTKMM_LIBRARIES}
+    ${GTKMMPLPLOT_LIBRARIES}
 )

@@ -11,11 +11,18 @@
     ```
 
 * GTKMM
-    ```
-    brew install gtkmm
-    brew install gtkmm3
-    brew install glade
-    ```
+    * Linux
+        ```
+        sudo apt-get install libgtkmm-3.0-dev
+        sudo apt-get install libltdl3-dev libqhull-dev libpango1.0-0 libplplot-dev
+        ```
+
+    * MacOS
+        ```
+        brew install gtkmm
+        brew install gtkmm3
+        brew install glade
+        ```
 
 # Quick Troubleshooting
 * OSX: 
