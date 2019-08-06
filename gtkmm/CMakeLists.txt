@@ -30,7 +30,7 @@ target_link_libraries(hello_world
     ${GTKMM_LIBRARIES}
 )
 
-# Hello World Plot #############################################################
+# GTKMM-PLPLOT example #########################################################
 set(plot_hello_world_src
     src/main_plplot.cpp
 )
@@ -44,6 +44,24 @@ PUBLIC
     ${GTKMMPLPLOT_INCLUDE_DIRS}
 )
 target_link_libraries(hello_world_plot 
+    ${GTKMM_LIBRARIES}
+    ${GTKMMPLPLOT_LIBRARIES}
+)
+
+# Minimal Working Example ######################################################
+set(mwe_src
+    src/main_mwe.cpp
+)
+add_executable(minimal_working_example ${mwe_src})
+target_compile_options(minimal_working_example
+    PUBLIC -Wall -o -std=c++11
+)
+target_include_directories(minimal_working_example
+PUBLIC 
+    ${GTKMM_INCLUDE_DIRS}
+    ${GTKMMPLPLOT_INCLUDE_DIRS}
+)
+target_link_libraries(minimal_working_example 
     ${GTKMM_LIBRARIES}
     ${GTKMMPLPLOT_LIBRARIES}
 )
