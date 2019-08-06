@@ -16,10 +16,30 @@ namespace fdcl
 
 class gui : public Gtk::Window
 {
+private:
+    Gtk::PLplot::PlotData2D plot_ax;
+    Gtk::PLplot::Plot2D plot;
+    Gtk::PLplot::Canvas canvas;
+    Gtk::Grid grid;
 public:
-    gui(void)
+    gui(std::valarray<double> &x, std::valarray<double> &y):
+        plot_ax(x, y),
+        plot(plot_ax),
+        canvas(plot)
     {
+        // Set window size
+        int w = 720, h = 580;
+        set_default_size(w, h);
+        Gdk::Geometry geometry;
+        geometry.min_aspect = geometry.max_aspect = double(w) / double(h);
+        set_geometry_hints(*this, geometry, Gdk::HINT_ASPECT);
         
+        canvas.set_hexpand(true);
+        canvas.set_vexpand(true);
+
+        grid.attach(canvas, 0, 0, 1, 1);
+        add(grid);
+        grid.show_all();
     }
 };  // end of class gui
 }  // end of namespace fdcl
@@ -27,10 +47,19 @@ public:
 
 int main(int argc, char **argv)
 {
-    Glib::set_application_name("gtkmm-plplot-test1");
-    Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(
-        argc, argv, "com.fdcl-gwu.gtkmm-plplot-mwe");
-    fdcl::gui gui; //(x_va, y_va, x_title, y_title);
-    return app->run(gui);
+    std::valarray<double> x(20), y(20);
+
+    for (int i = 0; i < 20; i++)
+    {
+        x[i] = i;
+        y[i] = 2.0 * i;
+    }
+
+    Glib::set_application_name("gtkmm-plplot-mwe");
+    auto app = Gtk::Application::create(argc, argv, \
+        "com.fdcl-gwu.gtkmm-plplot-mwe");
+    fdcl::gui gui(x, y);
+    app->run(gui);
+    return 0;
 }
     
