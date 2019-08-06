@@ -12,7 +12,7 @@ include_directories("/usr/local/lib/python2.7/dist-packages/numpy/core/include/"
 include_directories("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/numpy/core/include")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/libraries/matplotlib-cpp)
+include_directories(${PROJECT_SOURCE_DIR}/../libraries/matplotlib-cpp)
 
 find_package (PkgConfig REQUIRED)
 find_package(PythonLibs 2.7)
