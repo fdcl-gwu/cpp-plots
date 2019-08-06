@@ -19,9 +19,8 @@
 
     * MacOS
         ```
-        brew install gtkmm
-        brew install gtkmm3
-        brew install glade
+        brew install gtkmm gtkmm3 glade plplot
+        brew install tschoonj/tap/gtkmm-plplot
         ```
 
 # Quick Troubleshooting
