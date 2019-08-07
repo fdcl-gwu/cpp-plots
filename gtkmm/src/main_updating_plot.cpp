@@ -26,6 +26,8 @@ struct Params
     char **argv;
 };
 
+pthread_mutex_t mutex;
+
 
 bool system_on = true;
 std::valarray<double> x(20), y(20);
@@ -38,15 +40,20 @@ class gui : public Gtk::Window
 {
 private:
     Gtk::PLplot::PlotData2D plot_ax;
-    Gtk::PLplot::Plot2D plot;
+    Gtk::PLplot::PlotData2D *plot_update;
+    Gtk::PLplot::Plot2D *plot;
     Gtk::PLplot::Canvas canvas;
     Gtk::Grid grid;
 public:
     gui(std::valarray<double> &x, std::valarray<double> &y):
-        plot_ax(x, y),
-        plot(plot_ax),
-        canvas(plot)
+        plot_ax(x, y)
     {
+        // canvas.set_focus_on_click(false);
+        // canvas.freeze_child_notify();
+        canvas.set_can_focus(false);
+
+        plot = Gtk::manage(new Gtk::PLplot::Plot2D(plot_ax));
+        canvas.add_plot(*plot);
 
         // // Set window size
         int w = 720, h = 580;
@@ -61,6 +68,26 @@ public:
         grid.attach(canvas, 0, 0, 1, 1);
         add(grid);
         grid.show_all();
+
+        //create slot for timeout signal
+        int timeout_value = 50; //in ms 20 Hz
+        sigc::slot<bool> my_slot = sigc::mem_fun(*this, &gui::on_timeout);
+        //connect slot to signal
+        Glib::signal_timeout().connect(my_slot, timeout_value);
+    }
+
+    bool on_timeout(void)
+    {
+        canvas.remove_plot(*plot);
+
+        pthread_mutex_lock(&mutex);
+        plot_update = Gtk::manage(new Gtk::PLplot::PlotData2D(x, y));
+        pthread_mutex_unlock(&mutex);
+
+        plot = Gtk::manage(new Gtk::PLplot::Plot2D(*plot_update));
+        canvas.add_plot(*plot);
+
+        return true;
     }
 };  // end of class gui
 }  // end of namespace fdcl
@@ -92,9 +119,11 @@ void *thread_change_data(void *thread_id)
     std::cout << "A" << std::endl;
     while (system_on)
     {
-        x[0] = x[0] + 0.1;
-        std::cout << x[0] << std::endl;
-        usleep(500000);  // 500 millis
+        pthread_mutex_lock(&mutex);
+        y[0] = y[0] + 0.01;
+        pthread_mutex_unlock(&mutex);
+        std::cout << y[0] << std::endl;
+        usleep(50000);  // 50 millis
     }
 
     std::cout << "Closing change data thread .."  << std::endl;
