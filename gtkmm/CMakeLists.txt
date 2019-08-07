@@ -65,3 +65,25 @@ target_link_libraries(minimal_working_example
     ${GTKMM_LIBRARIES}
     ${GTKMMPLPLOT_LIBRARIES}
 )
+
+# Continously Updating Plot ####################################################
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+set(plot_update_src
+    src/main_updating_plot.cpp
+)
+add_executable(updating_plot ${plot_update_src})
+target_compile_options(updating_plot
+    PUBLIC -Wall -o -std=c++11 -pthread
+)
+target_include_directories(updating_plot
+PUBLIC 
+    ${GTKMM_INCLUDE_DIRS}
+    ${GTKMMPLPLOT_INCLUDE_DIRS}
+)
+target_link_libraries(updating_plot 
+    ${GTKMM_LIBRARIES}
+    ${GTKMMPLPLOT_LIBRARIES}
+    Threads::Threads
+)

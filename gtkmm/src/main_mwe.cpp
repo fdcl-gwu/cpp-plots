@@ -13,7 +13,6 @@
 
 namespace fdcl
 {
-
 class gui : public Gtk::Window
 {
 private:
@@ -62,4 +61,3 @@ int main(int argc, char **argv)
     app->run(gui);
     return 0;
 }
-    
