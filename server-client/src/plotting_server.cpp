@@ -9,7 +9,7 @@ fdcl::plot::server::server(void)
 
 fdcl::plot::server::~server(void)
 {
-    if (!is_closed) ::close(sockfd);
+    if (!is_closed) close();
     is_closed = true;
 }
 
@@ -18,6 +18,7 @@ void fdcl::plot::server::close(void)
 {
     if (!is_closed) ::close(sockfd);
     is_closed = true;
+    printf("PLOT: server closed!\n");
 }
 
 
@@ -63,5 +64,12 @@ int fdcl::plot::server::receive(char (&buffer)[MAXBUF], int len)
 int fdcl::plot::server::send(char (&buffer)[MAXBUF], int len)
 {
 	bytes_sent = ::send(sockfd, buffer, len, MSG_NOSIGNAL);
+    return bytes_sent;
+}
+
+
+int fdcl::plot::server::send_non_blocking(char (&buffer)[MAXBUF], int len)
+{
+    bytes_sent = ::send(sockfd, buffer, len, MSG_DONTWAIT);
     return bytes_sent;
 }

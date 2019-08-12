@@ -13,9 +13,6 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <strings.h>
-#include <stdio.h>
-#include <string.h>   //strlen
-#include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>   //close
 #include <arpa/inet.h>    //close
@@ -40,6 +37,7 @@ public:
     void close(void);
     int receive(char (&buffer)[MAXBUF], int len);
     int send(char (&buffer)[MAXBUF], int len);
+    int send_non_blocking(char (&buffer)[MAXBUF], int len);
 
 private:
     struct sockaddr_in serv_addr;
