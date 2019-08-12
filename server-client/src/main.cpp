@@ -80,7 +80,6 @@ void *thread_plot_server(void *thread_id)
         string_to_char_buffer(buffer, num_bytes, data_to_send);
         pthread_mutex_unlock(&data_mutex);
 
-        std::cout << buffer << " " << num_bytes << std::endl;
         bytes_sent = server.send(buffer, num_bytes);
         // if(bytes_sent > 0) printf("Sent: %i\n", bytes_sent);
 
@@ -119,7 +118,7 @@ void *thread_update_data(void *thread_id)
     {
         i++;
         pthread_mutex_lock(&data_mutex);
-        data_to_send = "cat " + std::to_string(i);
+        data_to_send = "12,23," + std::to_string(i);
         pthread_mutex_unlock(&data_mutex);
 
         usleep(200000); // 50 Hz
