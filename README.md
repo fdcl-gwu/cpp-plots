@@ -83,6 +83,8 @@ This has been successfully tested in both Ubuntu 18.04 and macOS Mojave.
 All the methods discussed so far uses different libraries developed in C++.
 In contrast, this method uses a server-client communication between C++ code and Python code so that all the plots are drawn using Python's Matplotlib.
 This does not suffer from issues related to multithreading as discussed above.
+This can be used for plotting real-time data while talking to hardware.
+
 Also, has the potential to explore all the Matplotlib functions even after the updates without waiting for some third party developers (most of whome develop them as a service to others in spite of working on actual jobs) to update their libraries.
 
 This method works as follows:
