@@ -53,13 +53,6 @@ public:
         close("Exit")
     {
         canvas.set_can_focus(false);
-        // canvas.on_motion_notify_event()
-        canvas.add_events(Gdk::POINTER_MOTION_MASK |
-             Gdk::BUTTON_PRESS_MASK |
-             Gdk::BUTTON_RELEASE_MASK);
-        // canvas.on_motion_notify_event()
-        // canvas.signal_clicked().connect(
-        // sigc::mem_fun(canvas, &gui::on_plplot_drawing_area_double_click));
 
         std::valarray<double> xx(10), yy(10);
         for (int i = 0; i < 10; i++)
@@ -88,7 +81,8 @@ public:
         button_grid.set_row_spacing(5);
         button_grid.set_column_spacing(5);
         button_grid.set_column_homogeneous(false);
-        close.signal_clicked().connect(sigc::mem_fun(*this, &gui::on_close_button_clicked));
+        close.signal_clicked().connect(sigc::mem_fun(*this, \
+            &gui::on_close_button_clicked));
         button_grid.attach(close, 1, 0, 1, 1);
 
         grid.attach(button_grid, 0, 0, 1, 1);
@@ -138,9 +132,6 @@ public:
         }
         return false;
     }
-
-
-
 };  // end of class gui
 }  // end of namespace fdcl
 
@@ -195,9 +186,6 @@ int main(int argc, char *argv[])
     pthread_attr_t attr;
     struct sched_param param;
     int fifo_max_prio, fifo_min_prio;
-
-    // Initialize mutex and condition variables.
-    // pthread_mutex_init(&UAV_data_mumtex, NULL);
 
     // Set thread attributes.
     pthread_attr_init(&attr);

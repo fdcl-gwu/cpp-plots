@@ -24,7 +24,7 @@ class Client(threading.Thread):
 
                 data_received = self.client.recv(1024)
                 if len(data_received) > 0:
-                    # print(bytes_received)
+                    # print(data_received)
 
                     SYS.threadlock.acquire()
                     self.parse_received_data(data_received)
@@ -38,13 +38,12 @@ class Client(threading.Thread):
                     print('CLIENT: exiting program ..')
                     break
             except:
-                # a = 1
                 SYS.on = False
                 print('CLIENT: server closed unexpectedly!')
                 print('CLIENT: exiting program ..')
                 break
 
-            # print('CLIENT: end of program.')
+            print('CLIENT: end of program.')
         
     def parse_received_data(self, data_received):
 
